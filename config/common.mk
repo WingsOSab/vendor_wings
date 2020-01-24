@@ -96,6 +96,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig
 
+# Charger
+PRODUCT_PACKAGES += \
+    product_charger_res_images
+
 # Extra tools
 PRODUCT_PACKAGES += \
     bash \
