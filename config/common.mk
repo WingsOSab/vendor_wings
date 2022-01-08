@@ -213,6 +213,7 @@ PRODUCT_PACKAGE_OVERLAYS += \
     vendor/wings/overlay/common
 
 PRODUCT_PACKAGES += \
+    AndroidBlackThemeOverlay \
     CustomFontPixelLauncherOverlay \
     DocumentsUIOverlay \
     NetworkStackOverlay \
