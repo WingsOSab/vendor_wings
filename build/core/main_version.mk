@@ -11,3 +11,9 @@ ADDITIONAL_SYSTEM_PROPERTIES += \
     ro.wings.version=$(WINGS_VERSION) \
     ro.wings.device=$(WINGS_BUILD) \
     ro.modversion=$(WINGS_VERSION)
+
+# Updater
+ifeq ($(IS_OFFICIAL),true)
+    ADDITIONAL_SYSTEM_PROPERTIES  += \
+        ro.is_official=true
+endif

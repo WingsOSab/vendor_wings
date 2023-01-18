@@ -85,7 +85,7 @@ PRODUCT_RESTRICT_VENDOR_FILES := false
 PRODUCT_PACKAGES += \
     build-manifest
 
-# PixelOS packages
+# WingsOS packages
 PRODUCT_PACKAGES += \
     Updater
 
@@ -192,5 +192,8 @@ CUSTOM_LOCALES += \
     fur_IT
 
 include vendor/wings/config/version.mk
+
+# OTA
+$(call inherit-product, vendor/wings/config/ota.mk)
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
