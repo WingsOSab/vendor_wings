@@ -15,5 +15,6 @@ ADDITIONAL_SYSTEM_PROPERTIES += \
 # Updater
 ifeq ($(IS_OFFICIAL),true)
     ADDITIONAL_SYSTEM_PROPERTIES  += \
-        ro.is_official=true
+        net.wingsos.build_type=ci \
+        net.wingsos.version=$(WINGS_VERSION_PROP)
 endif
