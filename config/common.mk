@@ -120,6 +120,9 @@ SYSTEMUI_OPTIMIZE_JAVA ?= true
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
 
+# Audio
+include vendor/wings/audio/audio.mk
+
 # Bootanimation
 include vendor/wings/config/bootanimation.mk
 
