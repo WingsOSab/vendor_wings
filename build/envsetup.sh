@@ -7,7 +7,7 @@ Additional Wings functions:
 - mmmp:            Builds all of the modules in the supplied directories and pushes them to the device.
 - aospremote:      Add git remote for matching AOSP repository.
 - cloremote:       Add git remote for matching CodeLinaro repository.
-- githubremote:    Add git remote for WingsOS-AOSP Github.
+- githubremote:    Add git remote for WingsOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
 - cmka:            Cleans and builds using mka.
@@ -66,6 +66,7 @@ function breakfast()
 {
     target=$1
     local variant=$2
+    source ${ANDROID_BUILD_TOP}/vendor/wings/vars/wings_target_release
 
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
@@ -80,7 +81,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch wings_$target-$variant
+            lunch wings_$target-$wings_target_release-$variant
         fi
     fi
     return $?
