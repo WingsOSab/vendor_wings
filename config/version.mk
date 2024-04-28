@@ -1,12 +1,42 @@
-WINGS_DATE_YEAR := $(shell date -u +%Y)
-WINGS_DATE_MONTH := $(shell date -u +%m)
-WINGS_DATE_DAY := $(shell date -u +%d)
-WINGS_DATE_HOUR := $(shell date -u +%H)
-WINGS_DATE_MINUTE := $(shell date -u +%M)
-WINGS_BUILD_DATE_UTC := $(shell date -d '$(WINGS_DATE_YEAR)-$(WINGS_DATE_MONTH)-$(WINGS_DATE_DAY) $(WINGS_DATE_HOUR):$(WINGS_DATE_MINUTE) UTC' +%s)
-WINGS_BUILD_DATE := $(WINGS_DATE_YEAR)$(WINGS_DATE_MONTH)$(WINGS_DATE_DAY)-$(WINGS_DATE_HOUR)$(WINGS_DATE_MINUTE)
+# Versioning System
+WINGS_CODENAME := NAMCHE
+WINGS_NUM_VER := 1.0
 
-WINGS_PLATFORM_VERSION := 14.0
+TARGET_PRODUCT_SHORT := $(subst wings_,,$(WINGS_BUILD_TYPE))
 
-WINGS_VERSION := WingsOS-$(WINGS_BUILD)-$(WINGS_PLATFORM_VERSION)-$(WINGS_BUILD_DATE)
-WINGS_VERSION_PROP := fourteen
+WINGS_BUILD_TYPE ?= unofficial
+
+# Only include Updater for official  build
+ifeq ($(filter-out official,$(WINGS_BUILD_TYPE)),)
+    PRODUCT_PACKAGES += \
+        Updater
+
+PRODUCT_COPY_FILES += \
+    vendor/wings/prebuilt/common/etc/init/init.wings-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.wings-updater.rc
+endif
+
+# Sign builds if building an official build
+ifeq ($(filter-out official,$(WINGS_BUILD_TYPE)),)
+    PRODUCT_DEFAULT_DEV_CERTIFICATE := $(KEYS_LOCATION)
+endif
+
+# Set all versions
+BUILD_DATE := $(shell date -u +%Y%m%d)
+BUILD_TIME := $(shell date -u +%H%M)
+WINGS_BUILD_VERSION := $(WINGS_NUM_VER)-$(WINGS_CODENAME)
+WINGS_VERSION := $(WINGS_BUILD_VERSION)-$(WINGS_BUILD)-$(WINGS_BUILD_TYPE)-$(BUILD_TIME)-$(BUILD_DATE)
+ROM_FINGERPRINT := WINGS/$(PLATFORM_VERSION)/$(TARGET_PRODUCT_SHORT)/$(BUILD_TIME)
+WINGS_DISPLAY_VERSION := $(WINGS_VERSION)
+RELEASE_TYPE := $(WINGS_BUILD_TYPE)
+
+# WingsOS system version
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.wings.base.codename=$(WINGS_CODENAME) \
+    ro.wings.base.version=$(WINGS_NUM_VER) \
+    ro.wings.build.version=$(WINGS_BUILD_VERSION) \
+    ro.wings.build.date=$(BUILD_DATE) \
+    ro.wings.buildtype=$(WINGS_BUILD_TYPE) \
+    ro.wings.display.version=$(WINGS_DISPLAY_VERSION) \
+    ro.wings.fingerprint=$(ROM_FINGERPRINT) \
+    ro.wings.version=$(WINGS_VERSION) \
+    ro.modversion=$(WINGS_VERSION)

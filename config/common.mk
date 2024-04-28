@@ -131,13 +131,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     build-manifest
 
-# WingsOS packages
-PRODUCT_PACKAGES += \
-    Updater
-
-PRODUCT_COPY_FILES += \
-    vendor/wings/prebuilt/common/etc/init/init.wings-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.wings-updater.rc \
-
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images \
@@ -255,6 +248,7 @@ CUSTOM_LOCALES += \
     cy_GB \
     fur_IT
 
+# Include Wings version
 include vendor/wings/config/version.mk
 
 # OTA
